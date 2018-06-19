@@ -1,0 +1,7 @@
+<canvas canvas-id="shareImg" style="width:545px;height:771px"></canvas>
+  
+<!-- 预览区域  -->
+<view hidden='{{hidden}}' class='preview'>
+  <image src='{{prurl}}' mode='widthFix'></image>
+  <button type='primary' size='mini' bindtap='save'>保存分享图</button>
+</view>

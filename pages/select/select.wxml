@@ -1,0 +1,28 @@
+<view class="game-main" style="background-image: url('https://wx-1255795917.cos.ap-guangzhou.myqcloud.com/blue.jpg');">
+<view class="currDate"><text>{{currDate}} 赛程</text></view>
+<view wx:if="{{currLen <= 0}}" class='nogame'> 今天没有比赛喔 </view>
+<view wx:else>
+    <view wx:for="{{currGames}}" wx:key="time" >
+        <view class="game-time">
+            <text>{{item.time}}</text>
+        </view>
+        <view class="one-game">
+             <text style="margin:11px">{{item.home}}</text>
+            <image style="width: 50px; height: 50px;"  src="../..{{item.home_flag}}"></image>
+            <text style="margin:11px">VS</text>
+            <image style="width: 50px; height: 50px;"  src="../..{{item.away_flag}}"></image>
+            <text style="margin:11px">{{item.away}}</text>
+        </view>
+        <view  class="radio-group" >
+            <radio-group bindchange="radioChange">
+            <radio value="{{currKey}}-{{index}}-{{item.home}}"/><text class="radio-text">{{item.home}} 胜</text>
+            <radio value="{{currKey}}-{{index}}-flat"  class="one-radio"/><text class="radio-text">平手</text>
+            <radio value="{{currKey}}-{{index}}-{{item.away}}"  class="one-radio"/><text class="radio-text">{{item.away}} 胜</text>
+            </radio-group>
+        </view>
+    </view>
+    <view style="height:60px"></view>
+</view>
+<view wx:if="{{currLen > 0}}" ><button type="primary"  bindtap="jump"> 生成图片</button></view>
+<view wx:else ><button type="primary"  bindtap="back"> 返回</button></view>
+</view>

@@ -1,0 +1,8 @@
+<view style="width: {{width}}px; height: {{height}}px; background-size:auto 100%; background-image: url('https://wx-1255795917.cos.ap-guangzhou.myqcloud.com/image/wcbg.jpg');">
+    <view class="tx"><text>2018 世界杯</text></view>
+    <view class="tx"><text>32支球队</text></view>
+    <view class="tx"><text>64场比赛</text></view>
+    <view class="tx"><text>支持你的球队</text></view>
+    <view class="tx"><text>预测比赛结果</text></view>
+    <button  wx:if="{{canIUse}}" open-type="getUserInfo" type="primary" bindtap="start" bindgetuserinfo="onGotUserInfo"> 查看今日赛程</button>
+</view>

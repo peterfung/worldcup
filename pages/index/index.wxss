@@ -1,0 +1,12 @@
+button {
+    position:fixed; 
+    bottom: 10%;
+    right:10%;
+    width: 80%;
+}
+.tx {
+    font-size:50rpx;
+    color:#FFFFFF;
+    text-align:center;
+    padding-top:60rpx;
+}
