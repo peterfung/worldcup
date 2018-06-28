@@ -3,5 +3,5 @@
 <!-- 预览区域  -->
 <view hidden='{{hidden}}' class='preview'>
   <image src='{{prurl}}' mode='widthFix'></image>
-  <button type='primary' size='mini' bindtap='save'>保存分享图</button>
+  <button  type='primary' size='default' bindtap='save' >保存分享图</button>
 </view>

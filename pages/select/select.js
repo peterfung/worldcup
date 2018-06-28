@@ -1,34 +1,69 @@
 Page({
     data:{
-        currGames:[],
-        currKey:"614",
+        games:{},
         currLen:0,
-        currDate:"",
+        nextLen:0,
         selectResult:{},
-        
         canIUse: wx.canIUse('button.open-type.getUserInfo')
     },
-    onLoad: function onLoad(options) {  
-        var _this = this;  
-        var myDate = new Date();
-        var currMon = myDate.getMonth()+1;
-        var currDay = myDate.getDate();
+    onLoad: function onLoad(options) {
+        var _this = this; 
         var schedule = getApp().globalData.schedule;
         var globalData = getApp().globalData;
-  
+
+        var currDate = new Date();
+        var currTitle = currDate.getFullYear()+'-'+(currDate.getMonth()+1)+'-'+currDate.getDate();
+        var currKey = (currDate.getMonth()+1)+''+currDate.getDate();
+        // var currKey = '618';
+        var currGames = [];
+
+        var nextDate = new Date(currDate.getTime() + 24*60*60*1000);
+        var nextTitle = nextDate.getFullYear()+'-'+(nextDate.getMonth()+1)+'-'+nextDate.getDate();
+        var nextKey = (nextDate.getMonth()+1)+''+nextDate.getDate();
+        // var nextKey = '619';
+        var nextGames = [];
+
+        var totalGames = [];
+
+        var tmp = schedule[currKey] || [];
+        var gamesCount = 0;
+        for (var i = 0; i < tmp.length; i++) {
+            var timeArr = tmp[i]['time'].split(':');
+            if(currDate.getHours() < parseInt(timeArr)+2) {
+                tmp[i]['index'] = gamesCount;
+                currGames.push(tmp[i]);
+                totalGames.push(tmp[i]);
+                gamesCount++;
+            }
+        }
+        var tmp = schedule[nextKey] || [];
+        for(var i = 0; i< tmp.length;i++) {
+            if(gamesCount < 4) {
+                tmp[i]['index'] = gamesCount;
+                nextGames.push(tmp[i]);
+                totalGames.push(tmp[i]);
+                gamesCount++;
+            }
+        }
+        
         _this.setData({
-            // currKey:"617"
-            currKey:currMon+""+currDay
-        });
-        _this.setData({
-            currDate:myDate.getFullYear()+'-'+currMon+'-'+currDay,
-            currGames:schedule[_this.data.currKey] || [],
-            currLen:schedule[_this.data.currKey]&&schedule[_this.data.currKey]["length"] || 0
-        });
+            games:{
+                currTitle:currTitle,
+                currGames:currGames,
+                nextTitle:nextTitle,
+                nextGames:nextGames
+            },
+            currLen:currGames.length,
+            nextLen:nextGames.length,
+            totalLen:totalGames.length,
+        })
+        console.log('total:',totalGames)
+        globalData.totalGames = totalGames;
+
         //获取国旗png
         var pms = [];
-        for(var i = 0;i<_this.data.currLen;i++) {
-            var home_url = schedule[_this.data.currKey][i]['home_flag'];
+        for(var i = 0;i<totalGames.length;i++) {
+            var home_url = totalGames[i]['home_flag'];
             home_url = home_url.replace('.svg','.png');
             pms[i*2] = new Promise(function (resolve, reject) {
                 wx.getImageInfo({
@@ -39,7 +74,7 @@ Page({
                   }
                 })
               });
-            var away_url = schedule[_this.data.currKey][i]['away_flag'];
+            var away_url = totalGames[i]['away_flag'];
             away_url = away_url.replace('.svg','.png');
             pms[i*2+1] = new Promise(function (resolve, reject) {
                 wx.getImageInfo({
@@ -53,27 +88,27 @@ Page({
         }
         Promise.all(pms).then(res => {
             // console.log("ressss",res);
-            for(var i = 0;i<_this.data.currLen;i++) {
-                schedule[_this.data.currKey][i]['home_flag_png'] = res[i*2].path;
-                schedule[_this.data.currKey][i]['away_flag_png'] = res[i*2+1].path;
+            for(var i = 0;i<totalGames.length;i++) {
+                globalData.totalGames[i]['home_flag_png'] = res[i*2].path;
+                globalData.totalGames[i]['away_flag_png'] = res[i*2+1].path;
             }
         })
+
     }, 
 
     radioChange: function(e) {
         var _this = this;
+        var totalGames = getApp().globalData.totalGames;
         console.log('radio发生change事件，携带value值为：', e.detail.value)
         var tmp = e.detail.value.split('-');
         var modify = "selectResult."+tmp[0]+"-"+tmp[1];
-        _this.setData({
-            [modify]:tmp[2]
-        })
-        console.log('data:',_this.data.selectResult);
+        totalGames[tmp[0]]['result'] = tmp[1];
+        console.log('results:',totalGames);
     },
     jump:function jump() {
         var _this = this;
         wx.navigateTo({
-            url: '../share/share?data='+JSON.stringify(_this.data.selectResult)
+            url: '../share/share'
         })
     },
     back:function back() {

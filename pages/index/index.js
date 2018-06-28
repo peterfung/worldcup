@@ -9,6 +9,17 @@ Page({
         url: '../select/select'
     })
   },
+  onShow: function() {
+    console.log('onShow');
+    var globalData = getApp().globalData;
+    var len = globalData.totalGames&&globalData.totalGames.length || 0;
+    for(var i = 0; i< len;i++) {
+        var tmp = globalData.totalGames&&globalData.totalGames[i];
+        if(tmp && tmp['result']) {
+            tmp['result'] = '';
+        }
+    }
+  },
   onLoad: function onLoad(options) {  
       var _this = this;  
       wx.getSystemInfo({  
@@ -21,6 +32,7 @@ Page({
       });
       var schedule = getApp().globalData.schedule;
       var globalData = getApp().globalData;
+      globalData.totalGames = [];
       wx.getImageInfo({
         src: 'https://wx-1255795917.cos.ap-guangzhou.myqcloud.com/image/draw.png',
         success: function (res) {
@@ -32,20 +44,20 @@ Page({
           }
       })
       wx.getImageInfo({
-        src: 'https://wx-1255795917.cos.ap-guangzhou.myqcloud.com/fo.svg',
+        src: 'https://wx-1255795917.cos.ap-guangzhou.myqcloud.com/image/winner.png',
         success: function (res) {
-          console.log('fo_path:',res.path)
-          globalData.fo_path = res.path;
+          console.log('winner_path:',res.path)
+          globalData.rwinner_path = res.path;
         },
         fail: function (e) {
           console.log('fail',e)
           }
       })
       wx.getImageInfo({
-        src: 'https://wx-1255795917.cos.ap-guangzhou.myqcloud.com/image/winner.png',
+        src: 'https://wx-1255795917.cos.ap-guangzhou.myqcloud.com/image/winner_left.png',
         success: function (res) {
           console.log('winner_path:',res.path)
-          globalData.winner_path = res.path;
+          globalData.lwinner_path = res.path;
         },
         fail: function (e) {
           console.log('fail',e)
@@ -56,16 +68,6 @@ Page({
         success: function (res) {
           console.log('wcbg_path:',res.path)
           globalData.wcbg_path = res.path;
-        },
-        fail: function (e) {
-          console.log('fail',e)
-          }
-      })
-      wx.getImageInfo({
-        src: 'https://wx-1255795917.cos.ap-guangzhou.myqcloud.com/image/qrcode.jpg',
-        success: function (res) {
-          console.log('wcbg_path:',res.path)
-          globalData.qrcode_path = res.path;
         },
         fail: function (e) {
           console.log('fail',e)
@@ -89,12 +91,6 @@ Page({
   },
   onReady:function(){
     // 页面渲染完成
-  },
-  onShow:function(){
-    // 页面显示
-  },
-  onHide:function(){
-    // 页面隐藏
   },
   onUnload:function(){
     // 页面关闭
