@@ -16,16 +16,14 @@
         <view  class="radio-group" >
             <radio-group bindchange="radioChange">
             <radio value="{{item.index}}-home"/><text class="radio-text">{{item.home}} 胜</text>
-            <radio value="{{item.index}}-flat"  class="one-radio"/><text class="radio-text">平手</text>
             <radio value="{{item.index}}-away"  class="one-radio"/><text class="radio-text">{{item.away}} 胜</text>
             </radio-group>
         </view>
     </view>
-    <view style="height:30px"></view>
 </view>
+<view style="height:30px"></view>
 
-
-<view wx:if="{{currLen <= 0}}" class='nogame'> </view>
+<view wx:if="{{nextLen <= 0}}" class='nogame'> </view>
 <view wx:else>
     <view class="currDate"><text>{{games.nextTitle}} 赛程</text></view>
     <view wx:for="{{games.nextGames}}" wx:key="time" >
@@ -42,13 +40,12 @@
         <view  class="radio-group" >
             <radio-group bindchange="radioChange">
             <radio value="{{item.index}}-home"/><text class="radio-text">{{item.home}} 胜</text>
-            <radio value="{{item.index}}-flat"  class="one-radio"/><text class="radio-text">平手</text>
             <radio value="{{item.index}}-away"  class="one-radio"/><text class="radio-text">{{item.away}} 胜</text>
             </radio-group>
         </view>
     </view>
-    <view style="height:60px"></view>
 </view>
+<view style="height:60px"></view>
 <view wx:if="{{totalLen > 0}}" ><button type="primary"  bindtap="jump"> 生成图片</button></view>
 <view wx:else ><button type="primary"  bindtap="back"> 返回</button></view>
 </view>

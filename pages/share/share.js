@@ -45,33 +45,33 @@ Page({
         if(!totalGames[i]['result']) {
           continue;
         }
-        ctx.drawImage(totalGames[i]['home_flag_png'], 545/2 -100, 260 + resultCount*100, 50, 50);
-        ctx.drawImage(totalGames[i]['away_flag_png'], 545/2 +50, 260 + resultCount*100, 50, 50);
+        ctx.drawImage(totalGames[i]['home_flag_png'], 545/2 -100, 280 + resultCount*100, 50, 50);
+        ctx.drawImage(totalGames[i]['away_flag_png'], 545/2 +50, 280 + resultCount*100, 50, 50);
         ctx.setFontSize(24)
         ctx.setTextAlign('right')
-        ctx.fillText(totalGames[i]['home'], 545/2 -120, 292 + resultCount*100)
+        ctx.fillText(totalGames[i]['home'], 545/2 -120, 312 + resultCount*100)
         ctx.setTextAlign('left')
-        ctx.fillText(totalGames[i]['away'], 545/2 +120, 292 + resultCount*100)
+        ctx.fillText(totalGames[i]['away'], 545/2 +120, 312 + resultCount*100)
         
         if('flat' == totalGames[i]['result']) {//平手
-          ctx.drawImage(globalData.draw_path, 545/2 -40, 265 + resultCount*100, 80, 40);
+          ctx.drawImage(globalData.draw_path, 545/2 -40, 285 + resultCount*100, 80, 40);
           ctx.setTextAlign('center')
           ctx.setFontSize(20)
-          ctx.fillText('平局', 545/2, 288 + resultCount*100)
+          ctx.fillText('平局', 545/2, 308 + resultCount*100)
         } else if('home' == totalGames[i]['result']) {
-          ctx.drawImage(globalData.lwinner_path, 545/2 -155, 238 + resultCount*100, 60, 50);
+          ctx.drawImage(globalData.lwinner_path, 545/2 -155, 258 + resultCount*100, 60, 50);
           ctx.setFontSize(18)
           ctx.setTextAlign('center')
-          ctx.fillText('WIN', 545/2-132, 260 + resultCount*100)
+          ctx.fillText('WIN', 545/2-132, 280 + resultCount*100)
           ctx.setFontSize(24)
-          ctx.fillText('VS', 545/2, 292 + resultCount*100)
+          ctx.fillText('VS', 545/2, 312 + resultCount*100)
         } else if('away' == totalGames[i]['result']) {
-          ctx.drawImage(globalData.rwinner_path, 545/2 +92, 238 + resultCount*100, 60, 50);
+          ctx.drawImage(globalData.rwinner_path, 545/2 +92, 258 + resultCount*100, 60, 50);
           ctx.setFontSize(18)
           ctx.setTextAlign('center')
-          ctx.fillText('WIN', 545/2+126, 260 + resultCount*100)
+          ctx.fillText('WIN', 545/2+126, 280 + resultCount*100)
           ctx.setFontSize(24)
-          ctx.fillText('VS', 545/2, 292 + resultCount*100)
+          ctx.fillText('VS', 545/2, 312 + resultCount*100)
         }
         resultCount++;
       }
